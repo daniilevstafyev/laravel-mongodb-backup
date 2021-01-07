@@ -91,6 +91,23 @@ return [
             'prefix_indexes' => true,
         ],
 
+        'mongodb' => [
+            'driver'   => 'mongodb',
+            'host'     => [
+                           'mcassemblies.7vixr.mongodb.net',
+                        ],
+            'port'     => env('MONGO_DB_PORT', 27017),
+            'database' => env('MONGO_DB_DATABASE'),
+            'username' => env('MONGO_DB_USERNAME'),
+            'password' => env('MONGO_DB_PASSWORD'),
+            'options'  => [
+                'ssl'        => 'true',
+                'replicaSet' => 'replicaSet',
+                'authSource' => 'admin',
+                'retryWrites' => 'true', 
+               'w' => 'majority'
+           ]
+        ],
     ],
 
     /*
