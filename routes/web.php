@@ -13,5 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 use App\Http\Controllers\MongoController;
-
-Route::get('/', [MongoController::class, 'home']);
+Route::get('/', function () {
+  return view('connect');
+});
+Route::post('/connect', [MongoController::class, 'home']);

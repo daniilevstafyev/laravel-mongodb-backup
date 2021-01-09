@@ -37,4 +37,29 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    /**
+     * Render an exception into an HTTP response.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Throwable  $exception
+     * @return \Illuminate\Http\Response
+     */
+    public function render($request, Throwable $exception)
+    {
+        $statusCode = $this->isHttpException($exception) ? $exception->getStatusCode() : $exception->getCode();
+        switch ($statusCode) {
+            case 404:
+                return response(view('errors.404'),$statusCode);
+                break;
+            default:
+                // if ($this->debugMode) {
+                //     dd($exception);
+                // }
+                return response(view('connect', [
+                    'error' => 'Connection Failed Or Something went wrong.',
+                ]), 500);
+                break;
+        }
+    }
 }

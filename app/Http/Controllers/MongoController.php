@@ -7,18 +7,27 @@ use MongoDB\Client as Mongo;
 
 class MongoController extends Controller
 {
-    function home() {
-        $prodClient = new Mongo('mongodb+srv://daniil:Yyw2dRA7CMkYWah@mcassemblies.7vixr.mongodb.net/test?retryWrites=true&w=majority');
-        $transactions = $prodClient->sample_analytics->transactions;
-        $documents = $transactions->find([], [
-            'projection' => [
-                'account_id' => 1,
-                'transaction_count' => 1,
-                'bucket_start_date' => 1,
-                'bucket_end_date' => 1,
-            ],
-            'limit' => 5
-        ]);
-        return $documents->toArray();
+    function home(Request $request) {
+        $targetConnectionUrl = $request->get('targetConnectionUrl');
+        $destinationConnnectionUrl = $request->get('destinationConnectionUrl');
+        
+        try {
+            $targetClient = new Mongo($targetConnectionUrl);
+            $destinationClient = new Mongo($destinationConnnectionUrl);
+            $transactions = $targetClient->sample_analytics->transactions;
+            $documents = $transactions->find([], [
+                'projection' => [
+                    'account_id' => 1,
+                    'transaction_count' => 1,
+                    'bucket_start_date' => 1,
+                    'bucket_end_date' => 1,
+                ],
+                'limit' => 5
+            ]);
+            return $documents->toArray();
+        } catch (Throwable $e) {
+            // report($e);
+            return redirect('/');
+        }
     }
 }
