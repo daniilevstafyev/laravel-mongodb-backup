@@ -53,10 +53,7 @@ class Handler extends ExceptionHandler
                 return response(view('errors.404'),$statusCode);
                 break;
             default:
-                // if ($this->debugMode) {
-                //     dd($exception);
-                // }
-                return response(view('connect', [
+                return response(json_encode([
                     'error' => 'Connection Failed Or Something went wrong.',
                 ]), 500);
                 break;

@@ -2,26 +2,39 @@
 
 @section('content')
 <div class="container">
-	<form method="POST" action="/connect">
-		@csrf
-		<div class="row">
-			@if(isset($error))
-				<div class="mt-5 alert alert-danger" role="alert">
-					{{ $error }}
-				</div>
-			@endif
-			<div class="mt-5">
-				<label for="targetConnectionUrl" class="form-label">Target Mongodb Connection Url</label>
-				<input type="text" class="form-control" id="targetConnectionUrl" name="targetConnectionUrl" placeholder="example: mongodb+srv://<username>:<password>@<cluster-address-1>/test?retryWrites=true&w=majority" required>
-			</div>
-			<div class="mt-5">
-				<label for="destinationConnectionUrl" class="form-label">Distination Mongodb Connection Url</label>
-				<input type="text" class="form-control" id="destinationConnectionUrl" name="destinationConnectionUrl" placeholder="example: mongodb+srv://<username>:<password>@<cluster-address-2>/test?retryWrites=true&w=majority"  required>
-			</div>
-			<div class="mt-5 position-relative">
-				<button type="submit" class="btn btn-primary position-absolute start-50 translate-middle">Copy Data</button>
-			</div>
+	<div id="error-msg" class="mt-5 alert alert-danger d-none" role="alert">
+	</div>
+	<div id="success-msg" class="mt-5 alert alert-success d-none" role="alert">
+	</div>
+	<div class="mt-5 row">
+		<label for="targetConnectionUrl" class="col-sm-3 col-form-label">Target Mongodb Connection Url</label>
+		<div class="col-sm-9">
+			<input type="text" class="form-control" id="targetConnectionUrl" name="targetConnectionUrl" placeholder="example: mongodb+srv://<username>:<password>@<cluster-address-1>/test?retryWrites=true&w=majority" required>
+		</div>
+	</div>
+	<div class="mt-5 row">
+		<label for="destinationConnectionUrl" class="col-sm-3 col-form-label">Distination Mongodb Connection Url</label>
+		<div class="col-sm-9">
+			<input type="text" class="form-control" id="destinationConnectionUrl" name="destinationConnectionUrl" placeholder="example: mongodb+srv://<username>:<password>@<cluster-address-2>/test?retryWrites=true&w=majority"  required>
+		</div>
+	</div>
+	<div class="mt-5">
+		<h3> Developers List </h3>
+		<ul class="list-group" id="list-developers">
+		</ul>
+	</div>
+	<form id="form-add-developer" class="row mt-2">
+		<div class="col-sm-4">
+			<label for="dev_slug" class="visually-hidden">Developer Name</label>
+			<input type="text" class="form-control" id="input-developer" placeholder="Developer Name. e.g. John" required>
+		</div>
+		<div class="col-sm-4">
+			<button type="submit" class="btn btn-success mb-3">Add Developer</button>
 		</div>
 	</form>
+
+	<div class="mt-5 position-relative">
+		<button type="button" id="btn-copy-data" class="btn btn-primary position-absolute start-50 translate-middle">Copy Data</button>
+	</div>
 </div>
 @endsection

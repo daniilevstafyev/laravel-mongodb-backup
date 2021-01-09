@@ -16,4 +16,4 @@ use App\Http\Controllers\MongoController;
 Route::get('/', function () {
   return view('connect');
 });
-Route::post('/connect', [MongoController::class, 'home']);
+Route::post('/connect', [MongoController::class, 'home'])->name('connect');
