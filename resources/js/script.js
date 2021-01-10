@@ -53,16 +53,15 @@ const onCopyDataSubmit = function() {
   }
 
   const errorMsgDiv = document.getElementById('error-msg');
+  const successMsgDiv = document.getElementById('success-msg');
   if (errorMsg) {
     // if there are errors, show error message
     errorMsgDiv.innerHTML = errorMsg;
     errorMsgDiv.classList.remove('d-none');
-    return;
+    successMsgDiv.classList.add('d-none');
   } else {
     errorMsgDiv.classList.add('d-none');
-
     const token = document.head.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    console.log(token);
 
     var xhttp = new XMLHttpRequest();
     xhttp.open("POST", "/connect", true); 
@@ -72,11 +71,13 @@ const onCopyDataSubmit = function() {
       if (this.readyState == 4 && this.status == 200) {
         // Response
         var response = this.responseText;
-        const successMsgDiv = document.getElementById('success-msg');
         successMsgDiv.innerHTML = response;
         successMsgDiv.classList.remove('d-none');
+        errorMsgDiv.classList.add('d-none');
       } else {
-        console.log(this);
+        errorMsgDiv.innerHTML = "Connection Failed Or Something went wrong.";
+        errorMsgDiv.classList.remove('d-none');
+        successMsgDiv.classList.add('d-none');
       }
     };
     var data = {
