@@ -19,6 +19,9 @@ class MongoController extends Controller
             $destinationConnnectionUrl = $request->get('destinationConnectionUrl');
             $targetClient = new Mongo($targetConnectionUrl);
             $destinationClient = new Mongo($destinationConnnectionUrl);
+
+            $collections = $request->get('collections');
+            return $collections;
             
             
             

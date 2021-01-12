@@ -1,7 +1,11 @@
 const developersList = [];
+const collectionsList = [];
+
 document.addEventListener('DOMContentLoaded', function() {
   let addDeveloperForm = document.getElementById('form-add-developer');
   addDeveloperForm.addEventListener('submit', onAddDeveloperFormSubmit);
+  let addCollectionForm = document.getElementById('form-add-collection');
+  addCollectionForm.addEventListener('submit', onAddCollectionFormSubmit);
   let btnCopyData = document.getElementById('btn-copy-data');
   btnCopyData.addEventListener('click', onCopyDataSubmit);
 });
@@ -12,6 +16,7 @@ const onAddDeveloperFormSubmit = function (e) {
 
   // get developer name
   let devName = document.getElementById('input-developer').value;
+
 
   // generate slug of developer
   let today = new Date();
@@ -29,11 +34,27 @@ const onAddDeveloperFormSubmit = function (e) {
   document.getElementById('input-developer').value = '';
 };
 
-const generateDevListHTML = function(developers) {
+const onAddCollectionFormSubmit = function (e) {
+  // prevent form submit
+  e.preventDefault();
+
+  // get developer name
+  let collectionName = document.getElementById('input-collection').value;
+
+  collectionsList.push(collectionName);
+
+  // generate html
+  listHtml = generateDevListHTML(collectionsList);
+  document.getElementById('list-collections').innerHTML = listHtml;
+  
+  // empty input for new one
+  document.getElementById('input-collection').value = '';
+};
+
+const generateDevListHTML = function(items) {
   html = "";
-  for (const developer of developers) {
-    console.log(developer);
-    html += `<li class="list-group-item">${developer}</li>`;
+  for (const item of items) {
+    html += `<li class="list-group-item">${item}</li>`;
   }
   return html;
 };
@@ -50,6 +71,9 @@ const onCopyDataSubmit = function() {
   }
   if (developersList.length === 0) {
     errorMsg += "Please add developers' names.";
+  }
+  if (collectionsList.length === 0) {
+    errorMsg += "Please add collections' names.";
   }
 
   const errorMsgDiv = document.getElementById('error-msg');
@@ -84,6 +108,7 @@ const onCopyDataSubmit = function() {
       targetConnectionUrl: targetUrl,
       destinationConnectionUrl: destinationUrl,
       developers: developersList,
+      collections: collectionsList,
     };
     xhttp.send(JSON.stringify(data));
   }
