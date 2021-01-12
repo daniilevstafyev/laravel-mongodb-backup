@@ -29,7 +29,9 @@ class MongoController extends Controller
             // Replace with '-3 Months' to get latest 3 months data
             $date3MonthsAgo = date('Y-m-d', strtotime("-5 Years"));
             // $start = new MongoDate(strtotime($date3MonthsAgo . " 00:00:00") * 1000);
-
+            
+            //I manually set $start to '2017-01-01' for test sample database. 
+            // Please commend this and use above code Line 31 for your database
             $start = new MongoDate(strtotime("2017-01-01 00:00:00") * 1000);
             Log::debug($start);
             
