@@ -71,13 +71,13 @@ const onCopyDataSubmit = function() {
     errorMsg += "Please enter destination Monogdb Url.<br/>";
   }
   if (!databaseName) {
-    errorMsg += "Please enter database Name";
+    errorMsg += "Please enter database Name.<br/>";
   }
   if (developersList.length === 0) {
-    errorMsg += "Please add developers' names.";
+    errorMsg += "Please add developers' names.<br/>";
   }
   if (collectionsList.length === 0) {
-    errorMsg += "Please add collections' names.";
+    errorMsg += "Please add collections' names.<br/>";
   }
 
   const errorMsgDiv = document.getElementById('error-msg');
