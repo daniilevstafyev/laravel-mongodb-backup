@@ -28,7 +28,10 @@ class MongoController extends Controller
             // -5 Years is for test for sample database
             // Replace with '-3 Months' to get latest 3 months data
             $date3MonthsAgo = date('Y-m-d', strtotime("-5 Years"));
-            $start = new MongoDate(strtotime($date3MonthsAgo . " 00:00:00") * 1000);
+            // $start = new MongoDate(strtotime($date3MonthsAgo . " 00:00:00") * 1000);
+
+            $start = new MongoDate(strtotime("2017-01-01 00:00:00") * 1000);
+            Log::debug($start);
             
             // Change 'sample_analytics' to your database name
             // Change 'transactions' to your collection name, e.g. 'invoices' or 'events'
@@ -37,6 +40,7 @@ class MongoController extends Controller
                 array(
                     '$match' => array(
                         // write your field instead of 'bucket_end_date'
+                        // This will be 'createdAt'
                         'bucket_end_date' => array(
                             '$gte' => $start
                         )
@@ -45,15 +49,45 @@ class MongoController extends Controller
                 array(
                     '$project' => array(
                         // add fields that you want to get
+                        // fields you want to get from 'invoices' or 'events'
                         'bucket_end_date' => 1
                     )
                 )
             );
             $documents = $transactions->aggregate($pipline);
             $result = $documents->toArray();
+
             
-            // Duplicates db
-            
+            // 3. Duplicates db
+            if (count($result) === 0) {
+                return 'There isn\'t document to update';
+            }
+
+            $developers = $request->get('developers');
+            foreach ($developers as $developer) {
+                $dbName = $developer;
+                $dbCount = 0;
+                do {
+                    // select a database. If it doesn't exist, it creates a new database.
+                    $db = $destinationClient->$dbName;
+                    $collection = $db->transactions;
+                    $count = $collection->count();
+                    Log::debug(gettype($count));
+                    Log::debug($count);
+                    if ($count > 0) {
+                        // db exists
+                        $dbCount++;
+                        $dbName = $developer . '-' . $dbCount;
+                    } else {
+                        // db doesn't exist
+                        $insertedCount = $collection->insertMany($result)->getInsertedCount();
+                        Log::debug($insertedCount);
+                        break;
+                    }
+                } while (true);
+            }
+
+            return 'Successfully Duplicated databases!';
 
             
         } catch (Throwable $e) {
