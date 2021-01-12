@@ -35,6 +35,7 @@ class MongoController extends Controller
             
             // Change 'sample_analytics' to your database name
             // Change 'transactions' to your collection name, e.g. 'invoices' or 'events'
+            // Will need to dulicate code from line 39~59 for several collections copy.
             $transactions = $targetClient->sample_analytics->transactions;
             $pipline = array(
                 array(
@@ -72,16 +73,18 @@ class MongoController extends Controller
                     $db = $destinationClient->$dbName;
                     $collection = $db->transactions;
                     $count = $collection->count();
-                    Log::debug(gettype($count));
-                    Log::debug($count);
                     if ($count > 0) {
                         // db exists
                         $dbCount++;
                         $dbName = $developer . '-' . $dbCount;
                     } else {
                         // db doesn't exist
-                        $insertedCount = $collection->insertMany($result)->getInsertedCount();
-                        Log::debug($insertedCount);
+                        // Will need to duplicate this line for sevearl collections copy.
+                        // e.g. 
+                        // $collection->insertMany($result1);
+                        // $collection->insertMany($result2);
+                        $collection->insertMany($result);
+                        
                         break;
                     }
                 } while (true);
