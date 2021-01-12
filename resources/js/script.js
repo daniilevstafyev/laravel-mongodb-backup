@@ -62,12 +62,16 @@ const generateDevListHTML = function(items) {
 const onCopyDataSubmit = function() {
   const targetUrl = document.getElementById('targetConnectionUrl').value;
   const destinationUrl = document.getElementById('destinationConnectionUrl').value;
+  const databaseName = document.getElementById('databaseName').value;
   let errorMsg = "";
   if (!targetUrl) {
     errorMsg += "Please enter target Monogdb Url.<br/>";
   }
   if (!destinationUrl) {
     errorMsg += "Please enter destination Monogdb Url.<br/>";
+  }
+  if (!databaseName) {
+    errorMsg += "Please enter database Name";
   }
   if (developersList.length === 0) {
     errorMsg += "Please add developers' names.";
@@ -109,6 +113,7 @@ const onCopyDataSubmit = function() {
       destinationConnectionUrl: destinationUrl,
       developers: developersList,
       collections: collectionsList,
+      dbName: databaseName,
     };
     xhttp.send(JSON.stringify(data));
   }

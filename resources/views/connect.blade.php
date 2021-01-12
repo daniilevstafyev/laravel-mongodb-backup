@@ -18,6 +18,12 @@
 			<input type="text" class="form-control" id="destinationConnectionUrl" name="destinationConnectionUrl" placeholder="example: mongodb+srv://<username>:<password>@<cluster-address-2>/test?retryWrites=true&w=majority"  required>
 		</div>
 	</div>
+	<div class="mt-5 row">
+		<label for="databaseName" class="col-sm-3 col-form-label">Database Name</label>
+		<div class="col-sm-9">
+			<input type="text" class="form-control" id="databaseName" name="databaseName" placeholder="example: sample_analytics"  required>
+		</div>
+	</div>
 	
 	<div class="mt-5">
 		<h3> Collections List </h3>
