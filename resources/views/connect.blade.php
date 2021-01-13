@@ -24,21 +24,6 @@
 			<input type="text" class="form-control" id="databaseName" name="databaseName" placeholder="example: sample_analytics"  required>
 		</div>
 	</div>
-	
-	<div class="mt-5">
-		<h3> Collections List </h3>
-		<ul class="list-group" id="list-collections">
-		</ul>
-	</div>
-	<form id="form-add-collection" class="row mt-2">
-		<div class="col-sm-4">
-			<label for="input-collection" class="visually-hidden">Collection Name</label>
-			<input type="text" class="form-control" id="input-collection" placeholder="Collection Name. e.g. event" required>
-		</div>
-		<div class="col-sm-4">
-			<button type="submit" class="btn btn-success mb-3">Add Collection</button>
-		</div>
-	</form>
 
 	<div class="mt-5">
 		<h3> Developers List </h3>

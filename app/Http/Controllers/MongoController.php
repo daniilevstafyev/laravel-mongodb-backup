@@ -42,53 +42,13 @@ class MongoController extends Controller
             Log::debug($start);
             
             $db = $request->get('dbName');
-            $collections = $request->get('collections');
             $developers = $request->get('developers');
-            $this->collections = $collections;
             $this->developers = $developers;
             $this->setDatabaseNames();
             return $this->databaseNames;
 
-            $results = array();
-
-            foreach($collections as $collectionName) {
-
-                // Change 'sample_analytics' to your database name
-                // Change 'transactions' to your collection name, e.g. 'invoices' or 'events'
-                // Will need to dulicate code from line 39~59 for several collections copy.
-                $collections = $targetClient->$db->$collectionName;
-                $pipline = array(
-                    array(
-                        '$match' => array(
-                            // write your field instead of 'bucket_end_date'
-                            // This will be 'createdAt'
-                            'bucket_end_date' => array(
-                                '$gte' => $start
-                            )
-                        )
-                    ),
-                    array(
-                        '$project' => array(
-                            // add fields that you want to get
-                            // fields you want to get from 'invoices' or 'events'
-                            'bucket_end_date' => 1
-                        )
-                    )
-                );
-                $documents = $collections->aggregate($pipline);
-                $result = $documents->toArray();
-
-                $chunks = array_chunk($result, 500);
-                foreach ($chunks as $key => $chunk) {
-                    $name = "/" . $collectionName . "-{$key}.txt";
-                    $path = resource_path('temp');
-                    file_put_contents($path . $name, json_encode($chunk));
-                }
-            }
-
             return 'Successfully Duplicated databases!';
 
-            
         } catch (Throwable $e) {
             return json_encode($e);
         }
@@ -117,12 +77,13 @@ class MongoController extends Controller
     }
 
     public function store() {
-        $path = resource_path('temp');
-        $files = glob("$path/*.txt");
+        // $path = resource_path('temp');
+        // $files = glob("$path/*.txt");
 
-        foreach ($files as $file) {
-            $content = json_decode(file_get_contents($file));
-            $collectionName = explode("-", $file)[0];            
-        }
+        // foreach ($files as $file) {
+        //     $content = json_decode(file_get_contents($file));
+        //     $filename = basename($file, ".txt");
+        //     $collectionName = explode("-", $file)[0];            
+        // }
     }
 }

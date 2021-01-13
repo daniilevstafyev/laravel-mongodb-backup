@@ -1,11 +1,8 @@
 const developersList = [];
-const collectionsList = [];
 
 document.addEventListener('DOMContentLoaded', function() {
   let addDeveloperForm = document.getElementById('form-add-developer');
   addDeveloperForm.addEventListener('submit', onAddDeveloperFormSubmit);
-  let addCollectionForm = document.getElementById('form-add-collection');
-  addCollectionForm.addEventListener('submit', onAddCollectionFormSubmit);
   let btnCopyData = document.getElementById('btn-copy-data');
   btnCopyData.addEventListener('click', onCopyDataSubmit);
 });
@@ -34,23 +31,6 @@ const onAddDeveloperFormSubmit = function (e) {
   document.getElementById('input-developer').value = '';
 };
 
-const onAddCollectionFormSubmit = function (e) {
-  // prevent form submit
-  e.preventDefault();
-
-  // get developer name
-  let collectionName = document.getElementById('input-collection').value;
-
-  collectionsList.push(collectionName);
-
-  // generate html
-  listHtml = generateDevListHTML(collectionsList);
-  document.getElementById('list-collections').innerHTML = listHtml;
-  
-  // empty input for new one
-  document.getElementById('input-collection').value = '';
-};
-
 const generateDevListHTML = function(items) {
   html = "";
   for (const item of items) {
@@ -75,9 +55,6 @@ const onCopyDataSubmit = function() {
   }
   if (developersList.length === 0) {
     errorMsg += "Please add developers' names.<br/>";
-  }
-  if (collectionsList.length === 0) {
-    errorMsg += "Please add collections' names.<br/>";
   }
 
   const errorMsgDiv = document.getElementById('error-msg');
@@ -112,11 +89,8 @@ const onCopyDataSubmit = function() {
       targetConnectionUrl: targetUrl,
       destinationConnectionUrl: destinationUrl,
       developers: developersList,
-      collections: collectionsList,
       dbName: databaseName,
     };
     xhttp.send(JSON.stringify(data));
   }
-  
-
 };
