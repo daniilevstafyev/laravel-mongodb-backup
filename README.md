@@ -23,11 +23,16 @@ QUEUE_CONNECTION=database
 npm run production
 ```
 
+- Please make sure that you have empty `temp` folder in `resources` folder
+```
+resources/temp
+```
+
 # Run Project
 ```
 php artisan serve
 ```
 In another terminal
 ```
-php artisan queue:work
+php artisan queue:work --timeout=99999999
 ```
