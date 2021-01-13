@@ -7,21 +7,22 @@
 	<div id="success-msg" class="mt-5 alert alert-success d-none" role="alert">
 	</div>
 	<div class="mt-5 row">
-		<label for="targetConnectionUrl" class="col-sm-3 col-form-label">Target Mongodb Connection Url</label>
+		<label for="prodClusterUrl" class="col-sm-3 col-form-label">Production Mongodb Cluster Url</label>
 		<div class="col-sm-9">
-			<input type="text" class="form-control" id="targetConnectionUrl" name="targetConnectionUrl" placeholder="example: mongodb+srv://<username>:<password>@<cluster-address-1>/test?retryWrites=true&w=majority" required>
+			<input type="text" class="form-control" id="prodClusterUrl" name="prodClusterUrl" placeholder="example: mongodb+srv://<username>:<password>@<cluster-address-1>" required>
 		</div>
 	</div>
-	<div class="mt-5 row">
-		<label for="destinationConnectionUrl" class="col-sm-3 col-form-label">Distination Mongodb Connection Url</label>
-		<div class="col-sm-9">
-			<input type="text" class="form-control" id="destinationConnectionUrl" name="destinationConnectionUrl" placeholder="example: mongodb+srv://<username>:<password>@<cluster-address-2>/test?retryWrites=true&w=majority"  required>
-		</div>
-	</div>
-	<div class="mt-5 row">
+	<div class="mt-2 row">
 		<label for="databaseName" class="col-sm-3 col-form-label">Database Name</label>
 		<div class="col-sm-9">
 			<input type="text" class="form-control" id="databaseName" name="databaseName" placeholder="example: sample_analytics"  required>
+		</div>
+	</div>
+
+	<div class="mt-5 row">
+		<label for="devClusterUrl" class="col-sm-3 col-form-label">Development Mongodb Cluster Url</label>
+		<div class="col-sm-9">
+			<input type="text" class="form-control" id="devClusterUrl" name="devClusterUrl" placeholder="example: mongodb+srv://<username>:<password>@<cluster-address-2>"  required>
 		</div>
 	</div>
 

@@ -40,14 +40,14 @@ const generateDevListHTML = function(items) {
 };
 
 const onCopyDataSubmit = function() {
-  const targetUrl = document.getElementById('targetConnectionUrl').value;
-  const destinationUrl = document.getElementById('destinationConnectionUrl').value;
+  const prodClusterUrl = document.getElementById('prodClusterUrl').value;
+  const devClusterUrl = document.getElementById('devClusterUrl').value;
   const databaseName = document.getElementById('databaseName').value;
   let errorMsg = "";
-  if (!targetUrl) {
+  if (!prodClusterUrl) {
     errorMsg += "Please enter target Monogdb Url.<br/>";
   }
-  if (!destinationUrl) {
+  if (!devClusterUrl) {
     errorMsg += "Please enter destination Monogdb Url.<br/>";
   }
   if (!databaseName) {
@@ -86,8 +86,8 @@ const onCopyDataSubmit = function() {
       }
     };
     var data = {
-      targetConnectionUrl: targetUrl,
-      destinationConnectionUrl: destinationUrl,
+      prodClusterUrl: prodClusterUrl,
+      devClusterUrl: devClusterUrl,
       developers: developersList,
       dbName: databaseName,
     };
