@@ -17,4 +17,4 @@ Route::get('/', function () {
   return view('connect');
 });
 Route::post('/connect', [MongoController::class, 'home'])->name('connect');
-Route::get('/store', [MongoController::class, 'store'])->name('store');
+Route::get('/batch', [MongoController::class, 'batch']);

@@ -9,7 +9,7 @@
 	<div class="mt-5 row">
 		<label for="prodClusterUrl" class="col-sm-3 col-form-label">Production Mongodb Cluster Url</label>
 		<div class="col-sm-9">
-			<input type="text" class="form-control" id="prodClusterUrl" name="prodClusterUrl" placeholder="example: mongodb+srv://<username>:<password>@<cluster-address-1>" required>
+			<input type="text" class="form-control" id="prodClusterUrl" placeholder="example: mongodb+srv://<username>:<password>@<cluster-address-1>" required>
 		</div>
 	</div>
 	<div class="mt-2 row">
@@ -22,7 +22,7 @@
 	<div class="mt-5 row">
 		<label for="devClusterUrl" class="col-sm-3 col-form-label">Development Mongodb Cluster Url</label>
 		<div class="col-sm-9">
-			<input type="text" class="form-control" id="devClusterUrl" name="devClusterUrl" placeholder="example: mongodb+srv://<username>:<password>@<cluster-address-2>"  required>
+			<input type="text" class="form-control" id="devClusterUrl" placeholder="example: mongodb+srv://<username>:<password>@<cluster-address-2>"  required>
 		</div>
 	</div>
 
@@ -42,7 +42,14 @@
 	</form>
 
 	<div class="mt-5 position-relative">
-		<button type="button" id="btn-copy-data" class="btn btn-primary position-absolute start-50 translate-middle">Copy Data</button>
+		<form id="form-final" method="POST" action="/connect">
+			@csrf
+			<input type="hidden" id="prodClusterUrlInput" name="prodClusterUrl" />
+			<input type="hidden" id="devClusterUrlInput" name="devClusterUrl" />
+			<input type="hidden" id="developersInput" name="developers" />
+			<input type="hidden" id="dbNameInput" name="dbName" />
+			<button type="submit" id="btn-copy-data" class="btn btn-primary position-absolute start-50 translate-middle">Copy Data</button>
+		</form>
 	</div>
 </div>
 @endsection

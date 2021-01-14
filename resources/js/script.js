@@ -2,9 +2,13 @@ const developersList = [];
 
 document.addEventListener('DOMContentLoaded', function() {
   let addDeveloperForm = document.getElementById('form-add-developer');
-  addDeveloperForm.addEventListener('submit', onAddDeveloperFormSubmit);
-  let btnCopyData = document.getElementById('btn-copy-data');
-  btnCopyData.addEventListener('click', onCopyDataSubmit);
+  if (addDeveloperForm) {
+    addDeveloperForm.addEventListener('submit', onAddDeveloperFormSubmit);
+  }
+  let finalForm = document.getElementById('form-final');
+  if (finalForm) {
+    finalForm.addEventListener('submit', onCopyDataSubmit);
+  }
 });
 
 const onAddDeveloperFormSubmit = function (e) {
@@ -39,7 +43,10 @@ const generateDevListHTML = function(items) {
   return html;
 };
 
-const onCopyDataSubmit = function() {
+const onCopyDataSubmit = function(e) {
+  e.preventDefault();
+  let form = e.target;
+  console.log(form);
   const prodClusterUrl = document.getElementById('prodClusterUrl').value;
   const devClusterUrl = document.getElementById('devClusterUrl').value;
   const databaseName = document.getElementById('databaseName').value;
@@ -66,31 +73,10 @@ const onCopyDataSubmit = function() {
     successMsgDiv.classList.add('d-none');
   } else {
     errorMsgDiv.classList.add('d-none');
-    const token = document.head.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-    var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "/connect", true); 
-    xhttp.setRequestHeader("Content-Type", "application/json");
-    xhttp.setRequestHeader("X-CSRF-TOKEN", token);
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        // Response
-        var response = this.responseText;
-        successMsgDiv.innerHTML = response;
-        successMsgDiv.classList.remove('d-none');
-        errorMsgDiv.classList.add('d-none');
-      } else {
-        errorMsgDiv.innerHTML = "Connection Failed Or Something went wrong.";
-        errorMsgDiv.classList.remove('d-none');
-        successMsgDiv.classList.add('d-none');
-      }
-    };
-    var data = {
-      prodClusterUrl: prodClusterUrl,
-      devClusterUrl: devClusterUrl,
-      developers: developersList,
-      dbName: databaseName,
-    };
-    xhttp.send(JSON.stringify(data));
+    document.getElementById('prodClusterUrlInput').value = prodClusterUrl;
+    document.getElementById('devClusterUrlInput').value = devClusterUrl;
+    document.getElementById('developersInput').value = JSON.stringify(developersList);
+    document.getElementById('dbNameInput').value = databaseName;
+    form.submit();
   }
 };
